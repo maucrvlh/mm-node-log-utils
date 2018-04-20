@@ -1,0 +1,24 @@
+{
+  "name": "tjam-node-log-utils",
+  "version": "1.0.0",
+  "description": "Utilitário para logging com cores",
+  "main": "dist/index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "mocha -t 20000"
+  },
+  "types": "dist/index.d.ts",
+  "repository": "http://git.tjam.jus.br/local-node-modules/tjam-node-log-utils",
+  "author": "Maurício Marinho <mauricio.marinho@tjam.jus.br>",
+  "license": "MIT",
+  "devDependencies": {
+    "typescript": "^2.7.2"
+  },
+  "dependencies": {
+    "colors": "^1.2.1",
+    "log-utils": "^0.2.1",
+    "tjam-node-exceptions": "http://git.tjam.jus.br/local-node-modules/tjam-node-exceptions.git#v1.0.3"
+  }
+}
