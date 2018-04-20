@@ -36,7 +36,7 @@ log.success('texto de log de sucesso na ação\n\n\n');
 
 ## Resultado
 
-<img src=http://git.tjam.jus.br/local-node-modules/tjam-node-log-utils/blob/master/log.png alt="console" />
+![Console](http://git.tjam.jus.br/local-node-modules/tjam-node-log-utils/raw/master/log.png "console")
 
 
 ## Exceções
