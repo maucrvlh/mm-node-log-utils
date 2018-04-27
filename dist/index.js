@@ -115,17 +115,4 @@ function success(msg) {
     console.log('['.gray.bold + '%s'.grey + '/'.grey + '%s'.grey + '/'.grey + '%s'.grey + ', às '.grey + '%s'.grey + ':'.grey + '%s'.grey + '] '.gray.bold + (lutils.symbol.success).green.bold + ' ' + settings.system.APIid.toString().green + ' ' + (settings.system.v.toString()).green + ' :: '.cyan + '%s'.cyan, today[0], today[1], today[2], today[3], today[4], msg);
 }
 exports.success = success;
-var configs = {
-    system: {
-        APIid: 'minha-api',
-        v: '1.0.0',
-        debug: true
-    }
-};
-setSettings(configs);
-debug('texto da mensagem para debug com objeto', { a: 1, b: 'x', c: ['www', 'localost'] });
-log('texto de log normal');
-error('texto de log de um erro');
-info('texto de log de uma informação');
-success('texto de log de sucesso na ação\n\n\n');
 //# sourceMappingURL=index.js.map
