@@ -58,11 +58,16 @@ exports.debug = debug;
 function log(msg) {
     var date = new Date();
     var today = [date.getDate(), date.getMonth(), date.getFullYear(), date.getHours(), date.getMinutes(), date.getSeconds()];
-    console.log('['.gray.bold + '%s'.grey + '/'.grey + '%s'.grey + '/'.grey + '%s'.grey + ', às '.grey + '%s'.grey + ':'.grey + '%s'.grey + '] '.gray.bold + settings.system.APIid.toString().green + ' ' + (settings.system.v.toString()).green + ' :: '.cyan + '%s'.reset, today[0], today[1], today[2], today[3], today[4], msg);
+    try {
+        console.log('['.gray.bold + '%s'.grey + '/'.grey + '%s'.grey + '/'.grey + '%s'.grey + ', às '.grey + '%s'.grey + ':'.grey + '%s'.grey + '] '.gray.bold + settings.system.APIid.toString().green + ' ' + (settings.system.v.toString()).green + ' :: '.cyan + '%s'.reset, today[0], today[1], today[2], today[3], today[4], msg);
+    }
+    catch (e) {
+        throw new tjam_node_exceptions_1.GenericErrorException('É necessário configurar as settings do sistema no utilitário de log usando o método .setSettings().');
+    }
 }
 exports.log = log;
 function error(text, obj) {
-    if (settings.system.debug) {
+    try {
         var date = new Date();
         var today = [date.getDate(), date.getMonth(), date.getFullYear(), date.getHours(), date.getMinutes(), date.getSeconds()];
         var msg = text;
@@ -101,18 +106,31 @@ function error(text, obj) {
             }
         }
     }
+    catch (e) {
+        throw new tjam_node_exceptions_1.GenericErrorException('É necessário configurar as settings do sistema no utilitário de log usando o método .setSettings().');
+    }
 }
 exports.error = error;
 function info(msg) {
     var date = new Date();
     var today = [date.getDate(), date.getMonth(), date.getFullYear(), date.getHours(), date.getMinutes(), date.getSeconds()];
-    console.log('['.gray.bold + '%s'.grey + '/'.grey + '%s'.grey + '/'.grey + '%s'.grey + ', às '.grey + '%s'.grey + ':'.grey + '%s'.grey + '] '.gray.bold + (lutils.symbol.info).blue + ' ' + settings.system.APIid.toString().green + ' ' + (settings.system.v.toString()).green + ' :: '.cyan + '%s'.blue, today[0], today[1], today[2], today[3], today[4], msg);
+    try {
+        console.log('['.gray.bold + '%s'.grey + '/'.grey + '%s'.grey + '/'.grey + '%s'.grey + ', às '.grey + '%s'.grey + ':'.grey + '%s'.grey + '] '.gray.bold + (lutils.symbol.info).blue + ' ' + settings.system.APIid.toString().green + ' ' + (settings.system.v.toString()).green + ' :: '.cyan + '%s'.blue, today[0], today[1], today[2], today[3], today[4], msg);
+    }
+    catch (e) {
+        throw new tjam_node_exceptions_1.GenericErrorException('É necessário configurar as settings do sistema no utilitário de log usando o método .setSettings().');
+    }
 }
 exports.info = info;
 function success(msg) {
     var date = new Date();
     var today = [date.getDate(), date.getMonth(), date.getFullYear(), date.getHours(), date.getMinutes(), date.getSeconds()];
-    console.log('['.gray.bold + '%s'.grey + '/'.grey + '%s'.grey + '/'.grey + '%s'.grey + ', às '.grey + '%s'.grey + ':'.grey + '%s'.grey + '] '.gray.bold + (lutils.symbol.success).green.bold + ' ' + settings.system.APIid.toString().green + ' ' + (settings.system.v.toString()).green + ' :: '.cyan + '%s'.cyan, today[0], today[1], today[2], today[3], today[4], msg);
+    try {
+        console.log('['.gray.bold + '%s'.grey + '/'.grey + '%s'.grey + '/'.grey + '%s'.grey + ', às '.grey + '%s'.grey + ':'.grey + '%s'.grey + '] '.gray.bold + (lutils.symbol.success).green.bold + ' ' + settings.system.APIid.toString().green + ' ' + (settings.system.v.toString()).green + ' :: '.cyan + '%s'.cyan, today[0], today[1], today[2], today[3], today[4], msg);
+    }
+    catch (e) {
+        throw new tjam_node_exceptions_1.GenericErrorException('É necessário configurar as settings do sistema no utilitário de log usando o método .setSettings().');
+    }
 }
 exports.success = success;
 //# sourceMappingURL=index.js.map
