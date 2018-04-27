@@ -1,6 +1,6 @@
 {
   "name": "tjam-node-log-utils",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Utilitário para logging com cores",
   "main": "dist/index.js",
   "directories": {
@@ -19,6 +19,7 @@
   "dependencies": {
     "colors": "^1.2.1",
     "log-utils": "^0.2.1",
+    "on-headers": "^1.0.1",
     "tjam-node-exceptions": "http://git.tjam.jus.br/local-node-modules/tjam-node-exceptions.git#v1.0.3"
   }
 }

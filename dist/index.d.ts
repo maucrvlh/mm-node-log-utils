@@ -6,6 +6,7 @@ export interface SystemSettings {
     };
 }
 export declare function setSettings(systemSettings: SystemSettings): void;
+export declare function plugin(req: any, res: any, next: any): void;
 export declare function debug(text: string, obj?: object): void;
 export declare function log(msg: string): void;
 export declare function error(text: string, obj?: object): void;

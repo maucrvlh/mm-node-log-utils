@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var lutils = require("log-utils");
+var onHeaders = require("on-headers");
 var colors_1 = require("colors");
 var tjam_node_exceptions_1 = require("tjam-node-exceptions");
 var settings = {};
@@ -8,11 +9,41 @@ function setSettings(systemSettings) {
     settings = systemSettings;
 }
 exports.setSettings = setSettings;
+function getNow() {
+    var date = new Date();
+    var h = date.getHours() < 10 ? '0' + date.getHours() : date.getHours();
+    var m = date.getMinutes() < 10 ? '0' + date.getMinutes() : date.getMinutes();
+    var s = date.getSeconds() < 10 ? '0' + date.getSeconds() : date.getSeconds();
+    return [date.getDate(), date.getMonth(), date.getFullYear(), h, m, s];
+}
+function plugin(req, res, next) {
+    var now = getNow();
+    var start = (new Date()).getTime();
+    onHeaders(res, function () {
+        var t = ((new Date()).getTime() - start);
+        var tt = t.toFixed(3);
+        var resStatus = res.statusCode == 401 ? (lutils.symbol.success).cyan.bold + ' ' + (res.statusCode.toString()).yellow : (res.statusCode >= 200 && res.statusCode <= 399 ? (lutils.symbol.success).cyan.bold + ' ' + (res.statusCode.toString()).green : (res.statusCode >= 400 && res.statusCode <= 499 ? (lutils.symbol.warning).red.bold + ' ' + (res.statusCode.toString()).yellow : (res.statusCode >= 100 && res.statusCode <= 199 ? (lutils.symbol.info).cyan.bold + ' ' + (res.statusCode.toString()).blue : (lutils.symbol.error).red.bold + ' ' + (res.statusCode.toString()).red)));
+        var reqTime = t < 30 ? (tt).cyan : (t >= 30 && t <= 80 ? (tt).yellow : (tt).red);
+        var id = settings.system ? settings.system.APIid.toString().green + ' ' + (settings.system.v.toString()).green : 'tjam-node-log-utils'.grey;
+        var method = req.method == 'DELETE' ? (req.method).red.bold : (req.method == 'POST' || req.method == 'PUT' ? (req.method).blue.bold : (req.method == 'OPTIONS' ? (req.method).reset.bold : (req.method).magenta.bold));
+        console.log('' +
+            '['.gray.bold +
+            '%s'.grey + '/'.grey + '%s'.grey + '/'.grey + '%s'.grey + ', às '.grey +
+            '%s'.grey + 'h'.grey + '%s'.grey + '] '.gray.bold +
+            id + ' :: '.cyan +
+            method + ' - '.grey +
+            resStatus + ' - '.grey +
+            reqTime + ' ms - '.grey +
+            (req.originalUrl).gray + ' - '.grey +
+            '['.cyan.bold + 'via '.grey.bold + (req.get('user-agent')).italic.grey + ']'.cyan.bold, now[0], now[1], now[2], now[3], now[4]);
+    });
+    next();
+}
+exports.plugin = plugin;
 function debug(text, obj) {
     try {
         if (settings.system.debug) {
-            var date = new Date();
-            var today = [date.getDate(), date.getMonth(), date.getFullYear(), date.getHours(), date.getMinutes(), date.getSeconds()];
+            var now = getNow();
             var msg = text;
             var query_1 = obj;
             var querystringified = '';
@@ -39,7 +70,7 @@ function debug(text, obj) {
                     querystringified = colors_1.cyan.bold(query_1);
                 }
             }
-            console.log('['.gray.bold + '%s'.grey + '/'.grey + '%s'.grey + '/'.grey + '%s'.grey + ', às '.grey + '%s'.grey + ':'.grey + '%s'.grey + '] '.gray.bold + (lutils.symbol.warning).red + ' ' + settings.system.APIid.toString().green + ' ' + (settings.system.v.toString()).green + ' :: '.cyan + '%s', today[0], today[1], today[2], today[3], today[4], msg);
+            console.log('['.gray.bold + '%s'.grey + '/'.grey + '%s'.grey + '/'.grey + '%s'.grey + ', às '.grey + '%s'.grey + 'h'.grey + '%s'.grey + '] '.gray.bold + settings.system.APIid.toString().green + ' ' + (settings.system.v.toString()).green + ' :: '.cyan + (lutils.symbol.warning).red + ' - '.grey + '%s'.reset, now[0], now[1], now[2], now[3], now[4], msg);
             if (querystringified != '' && typeof querystringified !== 'undefined' && typeof query_1 !== 'undefined') {
                 if (typeof query_1 == 'object') {
                     console.log('{\n%s\n}', querystringified);
@@ -56,10 +87,9 @@ function debug(text, obj) {
 }
 exports.debug = debug;
 function log(msg) {
-    var date = new Date();
-    var today = [date.getDate(), date.getMonth(), date.getFullYear(), date.getHours(), date.getMinutes(), date.getSeconds()];
+    var now = getNow();
     try {
-        console.log('['.gray.bold + '%s'.grey + '/'.grey + '%s'.grey + '/'.grey + '%s'.grey + ', às '.grey + '%s'.grey + ':'.grey + '%s'.grey + '] '.gray.bold + settings.system.APIid.toString().green + ' ' + (settings.system.v.toString()).green + ' :: '.cyan + '%s'.reset, today[0], today[1], today[2], today[3], today[4], msg);
+        console.log('['.gray.bold + '%s'.grey + '/'.grey + '%s'.grey + '/'.grey + '%s'.grey + ', às '.grey + '%s'.grey + 'h'.grey + '%s'.grey + '] '.gray.bold + settings.system.APIid.toString().green + ' ' + (settings.system.v.toString()).green + ' :: '.cyan + '%s'.reset, now[0], now[1], now[2], now[3], now[4], msg);
     }
     catch (e) {
         throw new tjam_node_exceptions_1.GenericErrorException('É necessário configurar as settings do sistema no utilitário de log usando o método .setSettings().');
@@ -68,8 +98,7 @@ function log(msg) {
 exports.log = log;
 function error(text, obj) {
     try {
-        var date = new Date();
-        var today = [date.getDate(), date.getMonth(), date.getFullYear(), date.getHours(), date.getMinutes(), date.getSeconds()];
+        var now = getNow();
         var msg = text;
         var query_2 = obj;
         var querystringified = '';
@@ -96,7 +125,7 @@ function error(text, obj) {
                 querystringified = colors_1.cyan.bold(query_2);
             }
         }
-        console.log('['.gray.bold + '%s'.grey + '/'.grey + '%s'.grey + '/'.grey + '%s'.grey + ', às '.grey + '%s'.grey + ':'.grey + '%s'.grey + '] '.gray.bold + (lutils.symbol.error).red + ' ' + settings.system.APIid.toString().green + ' ' + (settings.system.v.toString()).green + ' :: '.cyan + '%s'.red, today[0], today[1], today[2], today[3], today[4], msg);
+        console.log('['.gray.bold + '%s'.grey + '/'.grey + '%s'.grey + '/'.grey + '%s'.grey + ', às '.grey + '%s'.grey + 'h'.grey + '%s'.grey + '] '.gray.bold + settings.system.APIid.toString().green + ' ' + (settings.system.v.toString()).green + ' :: '.cyan + (lutils.symbol.error).red + ' - '.grey + '%s'.red, now[0], now[1], now[2], now[3], now[4], msg);
         if (querystringified != '' && typeof querystringified !== 'undefined' && typeof query_2 !== 'undefined') {
             if (typeof query_2 == 'object') {
                 console.log('{\n%s\n}', querystringified);
@@ -112,10 +141,9 @@ function error(text, obj) {
 }
 exports.error = error;
 function info(msg) {
-    var date = new Date();
-    var today = [date.getDate(), date.getMonth(), date.getFullYear(), date.getHours(), date.getMinutes(), date.getSeconds()];
+    var now = getNow();
     try {
-        console.log('['.gray.bold + '%s'.grey + '/'.grey + '%s'.grey + '/'.grey + '%s'.grey + ', às '.grey + '%s'.grey + ':'.grey + '%s'.grey + '] '.gray.bold + (lutils.symbol.info).blue + ' ' + settings.system.APIid.toString().green + ' ' + (settings.system.v.toString()).green + ' :: '.cyan + '%s'.blue, today[0], today[1], today[2], today[3], today[4], msg);
+        console.log('['.gray.bold + '%s'.grey + '/'.grey + '%s'.grey + '/'.grey + '%s'.grey + ', às '.grey + '%s'.grey + 'h'.grey + '%s'.grey + '] '.gray.bold + settings.system.APIid.toString().green + ' ' + (settings.system.v.toString()).green + ' :: '.cyan + (lutils.symbol.info).blue + ' - '.grey + '%s'.blue, now[0], now[1], now[2], now[3], now[4], msg);
     }
     catch (e) {
         throw new tjam_node_exceptions_1.GenericErrorException('É necessário configurar as settings do sistema no utilitário de log usando o método .setSettings().');
@@ -123,10 +151,9 @@ function info(msg) {
 }
 exports.info = info;
 function success(msg) {
-    var date = new Date();
-    var today = [date.getDate(), date.getMonth(), date.getFullYear(), date.getHours(), date.getMinutes(), date.getSeconds()];
+    var now = getNow();
     try {
-        console.log('['.gray.bold + '%s'.grey + '/'.grey + '%s'.grey + '/'.grey + '%s'.grey + ', às '.grey + '%s'.grey + ':'.grey + '%s'.grey + '] '.gray.bold + (lutils.symbol.success).green.bold + ' ' + settings.system.APIid.toString().green + ' ' + (settings.system.v.toString()).green + ' :: '.cyan + '%s'.cyan, today[0], today[1], today[2], today[3], today[4], msg);
+        console.log('['.gray.bold + '%s'.grey + '/'.grey + '%s'.grey + '/'.grey + '%s'.grey + ', às '.grey + '%s'.grey + 'h'.grey + '%s'.grey + '] '.gray.bold + settings.system.APIid.toString().green + ' ' + (settings.system.v.toString()).green + ' :: '.cyan + (lutils.symbol.success).green.bold + ' - '.grey + '%s'.cyan, now[0], now[1], now[2], now[3], now[4], msg);
     }
     catch (e) {
         throw new tjam_node_exceptions_1.GenericErrorException('É necessário configurar as settings do sistema no utilitário de log usando o método .setSettings().');
