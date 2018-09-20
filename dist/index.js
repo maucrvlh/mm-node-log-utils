@@ -35,7 +35,7 @@ function plugin(req, res, next) {
             resStatus + ' - '.grey +
             reqTime + ' ms - '.grey +
             (req.originalUrl).gray + ' - '.grey +
-            '['.cyan.bold + 'via '.grey.bold + (req.get('user-agent')).grey + ']'.cyan.bold, now[0], now[1], now[2], now[3], now[4]);
+            '['.cyan.bold + 'via '.grey.bold + (req.get('user-agent') ? req.get('user-agent') : 'agente desconhecido').grey + ']'.cyan.bold, now[0], now[1], now[2], now[3], now[4]);
     });
     next();
 }
