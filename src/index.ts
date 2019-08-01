@@ -33,7 +33,7 @@ export function plugin(req, res, next) {
         let t = ((new Date()).getTime() - start);
         let tt = t.toFixed(3);
 
-        let resStatus = res.statusCode == 401 ? (lutils.symbol.success).cyan.bold + ' ' + (res.statusCode.toString()).yellow : (res.statusCode >= 200 && res.statusCode <= 399 ? (lutils.symbol.success).cyan.bold + ' ' + (res.statusCode.toString()).green : ( res.statusCode >= 400 && res.statusCode <= 499 ? (lutils.symbol.warning).red.bold + ' ' + (res.statusCode.toString()).yellow : (res.statusCode >= 100 && res.statusCode <= 199 ? (lutils.symbol.info).cyan.bold + ' ' + (res.statusCode.toString()).blue : (lutils.symbol.error).red.bold + ' ' + (res.statusCode.toString()).red ) ) );
+        let resStatus = res.statusCode == 401 ? (lutils.success).cyan.bold + ' ' + (res.statusCode.toString()).yellow : (res.statusCode >= 200 && res.statusCode <= 399 ? (lutils.success).cyan.bold + ' ' + (res.statusCode.toString()).green : ( res.statusCode >= 400 && res.statusCode <= 499 ? (lutils.warning).red.bold + ' ' + (res.statusCode.toString()).yellow : (res.statusCode >= 100 && res.statusCode <= 199 ? (lutils.info).cyan.bold + ' ' + (res.statusCode.toString()).blue : (lutils.error).red.bold + ' ' + (res.statusCode.toString()).red ) ) );
 
         let reqTime = t < 30 ? (tt).cyan : (t >= 30 && t <= 80 ? (tt).yellow : (tt).red);
 
@@ -74,10 +74,12 @@ export function debug(text: string, obj?: object) {
                             querystringified += ', \n'.yellow;
 
                         querystringified += '\t' + cyan(x) + ': '.yellow + ((key) => { 
-                            if (typeof key === 'number') return blue(query[x]);
+                            if (typeof key === 'number' && !isNaN(key)) return blue(query[x]);
+                            if (typeof key === 'number' && isNaN(key)) return red('NaN');
                             if (typeof key === 'string') return '\''.yellow + green(query[x]) + '\''.yellow;
                             if (typeof key === 'boolean') return magenta(query[x]);
-                            if (typeof key === 'undefined') return gray.bold(query[x]);
+                            if (typeof key === 'undefined') return gray.bold('undefined');
+                            if (typeof key === 'object' && !key) return gray.bold('null');                            
                             else return yellow(query[x]);
                         })(query[x]);
                     }
@@ -86,7 +88,7 @@ export function debug(text: string, obj?: object) {
                 }
             }
                     
-            console.log('['.gray.bold + '%s'.grey + '/'.grey + '%s'.grey + '/'.grey + '%s'.grey + ', às '.grey + '%s'.grey + 'h'.grey + '%s'.grey + '] '.gray.bold + settings.system.APIid.toString().green + ' ' + (settings.system.v.toString()).green + ' :: '.cyan + (lutils.symbol.warning).red + ' - '.grey + '%s'.reset, now[0], now[1], now[2], now[3], now[4], msg);
+            console.log('['.gray.bold + '%s'.grey + '/'.grey + '%s'.grey + '/'.grey + '%s'.grey + ', às '.grey + '%s'.grey + 'h'.grey + '%s'.grey + '] '.gray.bold + settings.system.APIid.toString().green + ' ' + (settings.system.v.toString()).green + ' :: '.cyan + (lutils.warning).red + ' - '.grey + '%s'.reset, now[0], now[1], now[2], now[3], now[4], msg);
             
             if (querystringified != '' && typeof querystringified !== 'undefined' && typeof query !== 'undefined') {
                 if (typeof query == 'object') {
@@ -98,12 +100,13 @@ export function debug(text: string, obj?: object) {
             }
         }
     } catch(error) {
+        console.log(error);
         throw new GenericErrorException('É necessário configurar as settings do sistema no utilitário de log usando o método .setSettings().');
     }
 }
 
 export function log(msg: string) {
-	let now = getNow();
+    let now = getNow();
     try {
         console.log('['.gray.bold + '%s'.grey + '/'.grey + '%s'.grey + '/'.grey + '%s'.grey + ', às '.grey + '%s'.grey + 'h'.grey + '%s'.grey + '] '.gray.bold + settings.system.APIid.toString().green + ' ' + (settings.system.v.toString()).green + ' :: '.cyan + '%s'.reset, now[0], now[1], now[2], now[3], now[4], msg);
     } catch(e) {
@@ -139,7 +142,7 @@ export function error(text: string, obj?: object) {
 			}
 		}
 				
-		console.log('['.gray.bold + '%s'.grey + '/'.grey + '%s'.grey + '/'.grey + '%s'.grey + ', às '.grey + '%s'.grey + 'h'.grey + '%s'.grey + '] '.gray.bold + settings.system.APIid.toString().green + ' ' + (settings.system.v.toString()).green + ' :: '.cyan + (lutils.symbol.error).red + ' - '.grey + '%s'.red, now[0], now[1], now[2], now[3], now[4], msg);
+		console.log('['.gray.bold + '%s'.grey + '/'.grey + '%s'.grey + '/'.grey + '%s'.grey + ', às '.grey + '%s'.grey + 'h'.grey + '%s'.grey + '] '.gray.bold + settings.system.APIid.toString().green + ' ' + (settings.system.v.toString()).green + ' :: '.cyan + (lutils.error).red + ' - '.grey + '%s'.red, now[0], now[1], now[2], now[3], now[4], msg);
 		
 		if (querystringified != '' && typeof querystringified !== 'undefined' && typeof query !== 'undefined') {
 			if (typeof query == 'object') {
@@ -157,7 +160,7 @@ export function error(text: string, obj?: object) {
 export function info(msg: string) {
 	let now = getNow();
     try {
-        console.log('['.gray.bold + '%s'.grey + '/'.grey + '%s'.grey + '/'.grey + '%s'.grey + ', às '.grey + '%s'.grey + 'h'.grey + '%s'.grey + '] '.gray.bold + settings.system.APIid.toString().green + ' ' + (settings.system.v.toString()).green + ' :: '.cyan + (lutils.symbol.info).blue + ' - '.grey + '%s'.blue, now[0], now[1], now[2], now[3], now[4], msg);
+        console.log('['.gray.bold + '%s'.grey + '/'.grey + '%s'.grey + '/'.grey + '%s'.grey + ', às '.grey + '%s'.grey + 'h'.grey + '%s'.grey + '] '.gray.bold + settings.system.APIid.toString().green + ' ' + (settings.system.v.toString()).green + ' :: '.cyan + (lutils.info).blue + ' - '.grey + '%s'.blue, now[0], now[1], now[2], now[3], now[4], msg);
     } catch(e) {
         throw new GenericErrorException('É necessário configurar as settings do sistema no utilitário de log usando o método .setSettings().');
     }
@@ -166,7 +169,7 @@ export function info(msg: string) {
 export function success(msg: string) {
 	let now = getNow();
     try {
-        console.log('['.gray.bold + '%s'.grey + '/'.grey + '%s'.grey + '/'.grey + '%s'.grey + ', às '.grey + '%s'.grey + 'h'.grey + '%s'.grey + '] '.gray.bold + settings.system.APIid.toString().green + ' ' + (settings.system.v.toString()).green + ' :: '.cyan + (lutils.symbol.success).green.bold + ' - '.grey + '%s'.cyan, now[0], now[1], now[2], now[3], now[4], msg);
+        console.log('['.gray.bold + '%s'.grey + '/'.grey + '%s'.grey + '/'.grey + '%s'.grey + ', às '.grey + '%s'.grey + 'h'.grey + '%s'.grey + '] '.gray.bold + settings.system.APIid.toString().green + ' ' + (settings.system.v.toString()).green + ' :: '.cyan + (lutils.success).green.bold + ' - '.grey + '%s'.cyan, now[0], now[1], now[2], now[3], now[4], msg);
     } catch(e) {
         throw new GenericErrorException('É necessário configurar as settings do sistema no utilitário de log usando o método .setSettings().');
     }   

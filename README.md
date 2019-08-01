@@ -1,6 +1,6 @@
 <h1 align="center">TJAM Logging Utils for Node.js</h1>
 
-[![Version](https://img.shields.io/badge/Versão-v1.0.2-green.svg)](http://git.tjam.jus.br/local-node-modules/)
+[![Version](https://img.shields.io/badge/Versão-v1.0.3-green.svg)](http://git.tjam.jus.br/local-node-modules/)
 
 ---
 
@@ -9,13 +9,13 @@
 ## Instalação usando npm
    
 ```
-$ npm i http://git.tjam.jus.br/local-node-modules/tjam-node-log-utils.git#v1.0.2 --save
+$ npm i http://git.tjam.jus.br/local-node-modules/tjam-node-log-utils.git#v1.0.3 --save
 ```
 
 ## Instalação usando yarn (ligeiramente mais rápido)
    
 ```
-$ yarn add http://git.tjam.jus.br/local-node-modules/tjam-node-log-utils.git#v1.0.2
+$ yarn add http://git.tjam.jus.br/local-node-modules/tjam-node-log-utils.git#v1.0.3
 ```
 
 ## Utilização
@@ -28,7 +28,7 @@ import settings from '../../config/settings';
 
 const PORT = 8101;
 
-log.setSettings(setttings); // configura na lib as settings do sistema
+log.setSettings(settings); // configura na lib as settings do sistema
                             // caso não haja esta configuração, a lib lançará um GenericErrorException
 
 

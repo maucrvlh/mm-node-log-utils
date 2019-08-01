@@ -1,6 +1,6 @@
 {
   "name": "tjam-node-log-utils",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Utilitário para logging com cores",
   "main": "dist/index.js",
   "directories": {
