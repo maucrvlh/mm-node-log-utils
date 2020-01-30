@@ -1,5 +1,5 @@
 {
-  "name": "tjam-node-log-utils",
+  "name": "mm-node-log-utils",
   "version": "1.0.3",
   "description": "Utilitário para logging com cores",
   "main": "dist/index.js",
@@ -10,8 +10,8 @@
     "test": "mocha -t 20000"
   },
   "types": "dist/index.d.ts",
-  "repository": "http://git.tjam.jus.br/local-node-modules/tjam-node-log-utils",
-  "author": "Maurício Marinho <mauricio.marinho@tjam.jus.br>",
+  "repository": "https://github.com/maucrvlh/mm-node-log-utils",
+  "author": "Maurício Marinho <maucrvlh@gmail.com>",
   "license": "MIT",
   "devDependencies": {
     "typescript": "^2.7.2"
@@ -20,6 +20,6 @@
     "colors": "^1.3.3",
     "log-utils": "^1.0.0",
     "on-headers": "^1.0.1",
-    "tjam-node-exceptions": "http://git.tjam.jus.br/local-node-modules/tjam-node-exceptions.git#v1.0.4"
+    "mm-node-exceptions": "https://github.com/maucrvlh/mm-node-exceptions.git#v1.0.0"
   }
 }

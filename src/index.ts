@@ -37,7 +37,7 @@ export function plugin(req, res, next) {
 
         let reqTime = t < 30 ? (tt).cyan : (t >= 30 && t <= 80 ? (tt).yellow : (tt).red);
 
-        let id = settings.system ? settings.system.APIid.toString().green + ' ' + (settings.system.v.toString()).green : 'tjam-node-log-utils'.grey;
+        let id = settings.system ? settings.system.APIid.toString().green + ' ' + (settings.system.v.toString()).green : 'mm-node-log-utils'.grey;
 
         let method = req.method == 'DELETE' ? (req.method).red.bold : (req.method == 'POST' || req.method == 'PUT' ? (req.method).blue.bold : (req.method == 'OPTIONS' ? (req.method).reset.bold : (req.method).magenta.bold));
 

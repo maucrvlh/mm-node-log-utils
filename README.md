@@ -1,6 +1,6 @@
-<h1 align="center">TJAM Logging Utils for Node.js</h1>
+<h1 align="center">Logging Utils for Node.js</h1>
 
-[![Version](https://img.shields.io/badge/Versão-v1.0.3-green.svg)](http://git.tjam.jus.br/local-node-modules/)
+[![Version](https://img.shields.io/badge/Versão-v1.0.0-green.svg)](https://github.com/maucrvlh)
 
 ---
 
@@ -9,13 +9,13 @@
 ## Instalação usando npm
    
 ```
-$ npm i http://git.tjam.jus.br/local-node-modules/tjam-node-log-utils.git#v1.0.3 --save
+$ npm i https://github.com/maucrvlh/mm-node-log-utils.git#v1.0.0 --save
 ```
 
 ## Instalação usando yarn (ligeiramente mais rápido)
    
 ```
-$ yarn add http://git.tjam.jus.br/local-node-modules/tjam-node-log-utils.git#v1.0.3
+$ yarn add https://github.com/maucrvlh/mm-node-log-utils.git#v1.0.0
 ```
 
 ## Utilização
@@ -23,7 +23,7 @@ $ yarn add http://git.tjam.jus.br/local-node-modules/tjam-node-log-utils.git#v1.
 ### Logging da aplicação
 
 ```typescript
-import * as log from 'tjam-node-log-utils';
+import * as log from 'mm-node-log-utils';
 import settings from '../../config/settings';
 
 const PORT = 8101;
@@ -53,8 +53,8 @@ import settings from './settings';
 import constants from './constants';
 import routes from '../app/routes/all.js';
 
-import * as log from 'tjam-node-log-utils';
-import { ConsumerNotAllowedException } from 'tjam-node-exceptions';
+import * as log from 'mm-node-log-utils';
+import { ConsumerNotAllowedException } from 'mm-node-exceptions';
 
 export default function () {
     let app = express();
@@ -82,7 +82,7 @@ export default function () {
 
 ### Resultado
 
-![Console](http://git.tjam.jus.br/local-node-modules/tjam-node-log-utils/raw/master/log.png "console")
+![Console](https://github.com/mm-node-log-utils/raw/master/log.png "console")
 
 
 ## Exceções
