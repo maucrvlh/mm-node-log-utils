@@ -1,6 +1,6 @@
 <h1 align="center">Logging Utils for Node.js</h1>
 
-[![Version](https://img.shields.io/badge/Versão-v1.0.0-green.svg)](https://github.com/maucrvlh)
+[![Version](https://img.shields.io/badge/Versão-v1.0.3-green.svg)](https://github.com/maucrvlh)
 
 ---
 
@@ -9,13 +9,13 @@
 ## Instalação usando npm
    
 ```
-$ npm i https://github.com/maucrvlh/mm-node-log-utils.git#v1.0.0 --save
+$ npm i mm-node-log-utils --save
 ```
 
 ## Instalação usando yarn (ligeiramente mais rápido)
    
 ```
-$ yarn add https://github.com/maucrvlh/mm-node-log-utils.git#v1.0.0
+$ yarn add mm-node-log-utils
 ```
 
 ## Utilização
@@ -78,11 +78,6 @@ export default function () {
 }
 
 ```
-
-
-### Resultado
-
-![Console](https://github.com/mm-node-log-utils/raw/master/log.png "console")
 
 
 ## Exceções
