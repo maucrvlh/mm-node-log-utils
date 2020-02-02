@@ -3,7 +3,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var lutils = require("log-utils");
 var onHeaders = require("on-headers");
 var colors_1 = require("colors");
-var tjam_node_exceptions_1 = require("tjam-node-exceptions");
 var settings = {};
 function setSettings(systemSettings) {
     settings = systemSettings;
@@ -24,7 +23,7 @@ function plugin(req, res, next) {
         var tt = t.toFixed(3);
         var resStatus = res.statusCode == 401 ? (lutils.success).cyan.bold + ' ' + (res.statusCode.toString()).yellow : (res.statusCode >= 200 && res.statusCode <= 399 ? (lutils.success).cyan.bold + ' ' + (res.statusCode.toString()).green : (res.statusCode >= 400 && res.statusCode <= 499 ? (lutils.warning).red.bold + ' ' + (res.statusCode.toString()).yellow : (res.statusCode >= 100 && res.statusCode <= 199 ? (lutils.info).cyan.bold + ' ' + (res.statusCode.toString()).blue : (lutils.error).red.bold + ' ' + (res.statusCode.toString()).red)));
         var reqTime = t < 30 ? (tt).cyan : (t >= 30 && t <= 80 ? (tt).yellow : (tt).red);
-        var id = settings.system ? settings.system.APIid.toString().green + ' ' + (settings.system.v.toString()).green : 'tjam-node-log-utils'.grey;
+        var id = settings.system ? settings.system.APIid.toString().green + ' ' + (settings.system.v.toString()).green : 'mm-node-log-utils'.grey;
         var method = req.method == 'DELETE' ? (req.method).red.bold : (req.method == 'POST' || req.method == 'PUT' ? (req.method).blue.bold : (req.method == 'OPTIONS' ? (req.method).reset.bold : (req.method).magenta.bold));
         console.log('' +
             '['.gray.bold +
@@ -87,7 +86,7 @@ function debug(text, obj) {
     }
     catch (error) {
         console.log(error);
-        throw new tjam_node_exceptions_1.GenericErrorException('É necessário configurar as settings do sistema no utilitário de log usando o método .setSettings().');
+        throw new Error('É necessário configurar as settings do sistema no utilitário de log usando o método .setSettings().');
     }
 }
 exports.debug = debug;
@@ -97,7 +96,7 @@ function log(msg) {
         console.log('['.gray.bold + '%s'.grey + '/'.grey + '%s'.grey + '/'.grey + '%s'.grey + ', às '.grey + '%s'.grey + 'h'.grey + '%s'.grey + '] '.gray.bold + settings.system.APIid.toString().green + ' ' + (settings.system.v.toString()).green + ' :: '.cyan + '%s'.reset, now[0], now[1], now[2], now[3], now[4], msg);
     }
     catch (e) {
-        throw new tjam_node_exceptions_1.GenericErrorException('É necessário configurar as settings do sistema no utilitário de log usando o método .setSettings().');
+        throw new Error('É necessário configurar as settings do sistema no utilitário de log usando o método .setSettings().');
     }
 }
 exports.log = log;
@@ -141,7 +140,7 @@ function error(text, obj) {
         }
     }
     catch (e) {
-        throw new tjam_node_exceptions_1.GenericErrorException('É necessário configurar as settings do sistema no utilitário de log usando o método .setSettings().');
+        throw new Error('É necessário configurar as settings do sistema no utilitário de log usando o método .setSettings().');
     }
 }
 exports.error = error;
@@ -151,7 +150,7 @@ function info(msg) {
         console.log('['.gray.bold + '%s'.grey + '/'.grey + '%s'.grey + '/'.grey + '%s'.grey + ', às '.grey + '%s'.grey + 'h'.grey + '%s'.grey + '] '.gray.bold + settings.system.APIid.toString().green + ' ' + (settings.system.v.toString()).green + ' :: '.cyan + (lutils.info).blue + ' - '.grey + '%s'.blue, now[0], now[1], now[2], now[3], now[4], msg);
     }
     catch (e) {
-        throw new tjam_node_exceptions_1.GenericErrorException('É necessário configurar as settings do sistema no utilitário de log usando o método .setSettings().');
+        throw new Error('É necessário configurar as settings do sistema no utilitário de log usando o método .setSettings().');
     }
 }
 exports.info = info;
@@ -161,7 +160,7 @@ function success(msg) {
         console.log('['.gray.bold + '%s'.grey + '/'.grey + '%s'.grey + '/'.grey + '%s'.grey + ', às '.grey + '%s'.grey + 'h'.grey + '%s'.grey + '] '.gray.bold + settings.system.APIid.toString().green + ' ' + (settings.system.v.toString()).green + ' :: '.cyan + (lutils.success).green.bold + ' - '.grey + '%s'.cyan, now[0], now[1], now[2], now[3], now[4], msg);
     }
     catch (e) {
-        throw new tjam_node_exceptions_1.GenericErrorException('É necessário configurar as settings do sistema no utilitário de log usando o método .setSettings().');
+        throw new Error('É necessário configurar as settings do sistema no utilitário de log usando o método .setSettings().');
     }
 }
 exports.success = success;
