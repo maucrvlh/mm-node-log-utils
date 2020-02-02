@@ -1,6 +1,6 @@
 <h1 align="center">Logging Utils for Node.js</h1>
 
-[![Version](https://img.shields.io/badge/Versão-v1.0.3-green.svg)](https://github.com/maucrvlh)
+[![Version](https://img.shields.io/badge/Versão-v1.0.4-green.svg)](https://github.com/maucrvlh)
 
 ---
 
